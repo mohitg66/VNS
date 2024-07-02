@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    {% comment %} <link rel="stylesheet" href="static/styles.css"> {% endcomment %}
+    <title>Nav | IIIT-Delhi</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        body {
+            background: url('https://img.freepik.com/free-vector/minimal-geometric-stripe-shape-background_1409-1014.jpg');
+            background-size: cover;
+        }
+        .header-content {
+            position: relative;
+            text-align: center;
+            color: white;
+            padding-top: 6rem;
+        }
+        .content-section {
+            background: rgba(212, 207, 207, 0.6);
+            margin-top: 2rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            width: 90%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .footer {
+            background: rgba(31, 41, 55, 0.9);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-white min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="w-full h-14 bg-indigo-900 flex items-center justify-center">
+        <div class="text-2xl text-white">
+            <ul class="md:flex hidden font-bold">
+                <li class="mx-4 cursor-pointer"><a href="#home">Home</a></li>
+                <li class="mx-4 cursor-pointer"><a href="#about">About Us</a></li>
+                <li class="mx-4 cursor-pointer"><a href="#contact">Contact Us</a></li>
+                <li class="mx-4 cursor-pointer"><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Header Content -->
+    <div id="home" class="header-content">
+        <h1 class="text-4xl font-bold">Welcome to the Virtual Navigation System</h1>
+        <p class="text-xl mt-4">Navigate your way through our institute with ease.</p>
+    </div>
+
+    <!-- About Us Section -->
+    <div id="about" class="content-section">
+        <h2 class="text-2xl font-bold">About Us</h2>
+        <p>Our Virtual Navigation System (VNS) is designed to help students, faculty, and visitors find their way around the campus with ease. Using advanced GPS and WiFi positioning, our system ensures accurate and efficient navigation both indoors and outdoors.</p>
+    </div>
+
+    <!-- Contact Us Section -->
+    <div id="contact" class="content-section">
+        <h2 class="text-2xl font-bold">Contact Us</h2>
+        <p>For any queries or support, feel free to reach out to us at <a href="mailto:support@vnsystem.com" class="text-indigo-600">support@vnsystem.com</a>.</p>
+    </div>
+
+    <!-- Interactive Map Section -->
+    <div class="content-section" id="map-section">
+        <h2 class="text-2xl font-bold">Interactive Map</h2>
+        <div class ="h-96" id="map"></div>
+        <button id="start">Start Navigation</button>
+        {% comment %} <div id="step-count">Steps: 0</div> {% endcomment %}
+        <div class="direction-icon">
+            <img src="static/images/compass.png" alt="Compass">
+        </div>        
+        <div id="coordinates">Latitude: 0, Longitude: 0</div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer text-center p-4">
+        <p>© 2024 Virtual Navigation System. All rights reserved.</p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script type="module" src="static/map.js"></script>
+    <script type="module" src="static/sensors.js"></script>
+    <script type="module" src="static/app.js"></script>
+</body>
+</html>

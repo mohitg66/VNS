@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Register | IIIT-Delhi</title>
+    <style>
+        body {
+            background: url('https://img.freepik.com/free-vector/minimal-geometric-stripe-shape-background_1409-1014.jpg');
+            background-size: cover;
+            color: white;
+        }
+        .content-section {
+            background: rgba(31, 41, 55, 0.9);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            width: 90%;
+            max-width: 500px;
+            margin: 2rem auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .footer {
+            background: rgba(31, 41, 55, 0.9);
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const fullName = document.getElementById('full_name');
+            const username = document.getElementById('username');
+
+            fullName.addEventListener('input', () => {
+                const words = fullName.value.split(' ');
+                const firstWord = words[0] || '';
+                const randomDigits = Math.floor(1000 + Math.random() * 9000);
+                username.value = firstWord + randomDigits;
+            });
+        });
+    </script>
+</head>
+<body class="bg-slate-950 min-h-screen flex flex-col justify-center">
+
+    <!-- Navbar -->
+    <nav class="w-full h-14 bg-indigo-900 flex items-center justify-center">
+        <div class="text-2xl text-white">
+            <ul class="md:flex hidden font-bold">
+                <li class="mx-4 cursor-pointer"><a href="/">Home</a></li>
+                <li class="mx-4 cursor-pointer"><a href="/about">About Us</a></li>
+                <li class="mx-4 cursor-pointer"><a href="/contact">Contact Us</a></li>
+                <li class="mx-4 cursor-pointer"><a href="/logout">Logout</a></li>
+            </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Register Form -->
+    <div class="content-section">
+        <h2 class="text-2xl font-bold mb-4">Register</h2>
+        <form action="/register" method="POST">
+            {% csrf_token %}
+            {% comment %} select role {% endcomment %}
+            <div class="mb-4">
+                <label for="role" class="block text-sm font-bold mb-2">Role</label>
+                <select id="role" name="role" class="w-full p-2 border border-gray-300 rounded text-black">
+                    <option class="text-gray-500" disabled selected>Select Role</option>
+                    <option value="student">Student</option>
+                    <option value="visitor">Visitor</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="full_name" class="block text-sm font-bold mb-2">Full Name</label>
+                <input type="text" id="full_name" name="full_name" class="w-full p-2 border border-gray-300 rounded text-black">
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-sm font-bold mb-2">Password</label>
+                <input type="password" id="password" name="password" class="w-full p-2 border border-gray-300 rounded text-black">
+            </div>
+            <div class="mb-4">
+                <label for="username" class="block text-sm font-bold mb-2">Username (Auto-Generated)</label>
+                <input type="text" id="username" name="username" class="w-full p-2 border border-gray-300 rounded text-gray-200" readonly>
+            </div>
+            <button type="submit" class="bg-indigo-900 text-white p-2 rounded">Register</button>
+        </form>
+
+        <p class="mt-4">Already have an account? &nbsp; <a href="/login" class="text-white"> <u> Login </u> </a></p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer p-4 text-center mt-auto">
+        <p>&copy; 2024 IIIT-Delhi. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
