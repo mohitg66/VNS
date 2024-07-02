@@ -36,15 +36,20 @@
 <body class="bg-slate-950 text-white min-h-screen flex flex-col">
 
     <!-- Navbar -->
-    <nav class="w-full h-14 bg-indigo-900 flex items-center justify-center">
-        <div class="text-2xl text-white">
-            <ul class="md:flex hidden font-bold">
-                <li class="mx-4 cursor-pointer"><a href="#home">Home</a></li>
-                <li class="mx-4 cursor-pointer"><a href="#about">About Us</a></li>
-                <li class="mx-4 cursor-pointer"><a href="#contact">Contact Us</a></li>
-                <li class="mx-4 cursor-pointer"><a href="/logout">Logout</a></li>
-            </ul>
-        </div>
+    <nav class="w-full bg-indigo-900 flex items-center justify-between p-4">
+        <div class="text-2xl text-white font-bold">IIIT-Delhi</div>
+        <button id="menu-toggle" class="text-white md:hidden focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+        </button>
+        <ul id="menu" class="md:flex hidden font-bold space-x-0 md:space-x-4 md:space-y-0 flex-col md:flex-row md:items-center md:justify-center md:w-auto">
+            <li class="my-2 md:my-0"><a href="#home" class="block px-2 py-1">Home</a></li>
+            <li class="my-2 md:my-0"><a href="#about" class="block px-2 py-1">About Us</a></li>
+            <li class="my-2 md:my-0"><a href="#contact" class="block px-2 py-1">Contact Us</a></li>
+            {% comment %} logout {% endcomment %}
+            <li class="my-2 md:my-0"><a href="/logout" class="block px-2 py-1">Logout</a></li>
+        </ul>
     </nav>
 
     <!-- Header Content -->
@@ -68,17 +73,16 @@
     <!-- Interactive Map Section -->
     <div class="content-section" id="map-section">
         <h2 class="text-2xl font-bold">Interactive Map</h2>
-        <div class ="h-96" id="map"></div>
-        <button id="start">Start Navigation</button>
-        {% comment %} <div id="step-count">Steps: 0</div> {% endcomment %}
-        <div class="direction-icon">
+        <div class="h-96" id="map"></div>
+        <button id="start" class="bg-indigo-900 text-white p-2 rounded mt-2">Start Navigation</button>
+        <div class="direction-icon mt-2">
             <img src="static/images/compass.png" alt="Compass">
         </div>        
-        <div id="coordinates">Latitude: 0, Longitude: 0</div>
+        <div id="coordinates" class="mt-2">Latitude: 0, Longitude: 0</div>
     </div>
 
     <!-- Footer -->
-    <footer class="footer text-center p-4">
+    <footer class="footer text-center mt-6 p-4">
         <p>© 2024 Virtual Navigation System. All rights reserved.</p>
     </footer>
 
@@ -86,5 +90,13 @@
     <script type="module" src="static/map.js"></script>
     <script type="module" src="static/sensors.js"></script>
     <script type="module" src="static/app.js"></script>
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const menu = document.getElementById('menu');
+
+        menuToggle.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+    </script>
 </body>
 </html>

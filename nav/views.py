@@ -3,6 +3,8 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import logout, login, authenticate
 from .models import MyUser as User
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 # Create your views here.
 def index(request):
@@ -42,13 +44,16 @@ def register_view(request):
     else:
         return render(request, 'nav/register.html')
     
+
+@csrf_exempt
 def update_user_location(request):
     if request.user.is_authenticated:
-        lat = request.POST['lat']
-        lon = request.POST['lon']
+        # Parse the JSON body of the request
+        data = json.loads(request.body)
+        lat = float(data["lat"])
+        lon = float(data["lon"])
         request.user.lat = lat
         request.user.lon = lon
-        print(request)
         request.user.save()
         return HttpResponse('Location updated')
     else:

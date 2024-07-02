@@ -2,6 +2,7 @@ let map;
 let marker;
 let path = [];
 let currentPosition = { lat: 0, lon: 0 }; // Example starting point
+let count= 1;
 
 // Get current position using geolocation
 // navigator.geolocation.getCurrentPosition((position) => {
@@ -48,16 +49,18 @@ function updateMap() {
     L.polyline(path, { color: 'blue' }).addTo(map);
     map.panTo(new L.LatLng(currentPosition.lat, currentPosition.lon));
 
-    // update database if time is divisible by 5
-    const time = new Date().getSeconds();
-    if (time % 5 === 0) {
+    // update database every 5 seconds
+    count += 1;
+    // const time = new Date().getSeconds();
+    if (count % 6 === 0) {
+        alert(count + " Updating database with new position: " + currentPosition.lat + " " + currentPosition.lon);
         console.log("Updating database with new position:", currentPosition);
-        fetch('https://192.168.0.163:8000/update-user-location', {
+        fetch('/update_user_location', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(currentPosition)
+            body: JSON.stringify({ lat: currentPosition.lat, lon: currentPosition.lon })
         }).then(response => response.json())
             .then(data => {
                 console.log('Success:', data);
@@ -66,6 +69,7 @@ function updateMap() {
                 console.error('Error:', error);
             });
         
+        count= 1;
     }
 }
 
