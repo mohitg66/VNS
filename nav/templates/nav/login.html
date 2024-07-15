@@ -29,15 +29,20 @@
 <body class="bg-slate-950 min-h-screen flex flex-col justify-center">
 
     <!-- Navbar -->
-    <nav class="w-full h-14 bg-indigo-900 flex items-center justify-center">
-        <div class="text-2xl text-white">
-            <ul class="md:flex hidden font-bold">
-                <li class="mx-4 cursor-pointer"><a href="/">Home</a></li>
-                <li class="mx-4 cursor-pointer"><a href="/about">About Us</a></li>
-                <li class="mx-4 cursor-pointer"><a href="/contact">Contact Us</a></li>
-                <li class="mx-4 cursor-pointer"><a href="/logout">Logout</a></li>
-            </ul>
-        </div>
+    <nav class="w-full bg-indigo-900 flex items-center justify-between p-4">
+        <div class="text-2xl text-white font-bold">IIIT-Delhi</div>
+        <button id="menu-toggle" class="text-white md:hidden focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+        </button>
+        <ul id="menu" class="md:flex hidden font-bold space-x-0 md:space-x-4 md:space-y-0 flex-col md:flex-row md:items-center md:justify-center md:w-auto">
+            <li class="my-2 md:my-0"><a href="#home" class="block px-2 py-1">Home</a></li>
+            <li class="my-2 md:my-0"><a href="#about" class="block px-2 py-1">About Us</a></li>
+            <li class="my-2 md:my-0"><a href="#contact" class="block px-2 py-1">Contact Us</a></li>
+            {% comment %} logout {% endcomment %}
+            <li class="my-2 md:my-0"><a href="/logout" class="block px-2 py-1">Logout</a></li>
+        </ul>
     </nav>
 
     <!-- Login Form -->
@@ -63,6 +68,15 @@
     <footer class="footer p-4 text-center mt-auto">
         <p>&copy; 2024 IIIT-Delhi. All rights reserved.</p>
     </footer>
+
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const menu = document.getElementById('menu');
+
+        menuToggle.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+    </script>
 
 </body>
 </html>
