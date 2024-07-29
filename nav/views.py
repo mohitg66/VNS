@@ -6,6 +6,7 @@ from .models import MyUser as User
 from django.views.decorators.csrf import csrf_exempt
 import json
 
+
 # Create your views here.
 def index(request):
     if request.user.is_authenticated:
@@ -58,3 +59,26 @@ def update_user_location(request):
         return HttpResponse('Location updated')
     else:
         return HttpResponseNotFound('User not found')
+
+
+# position tracking
+from django.http import JsonResponse
+
+@csrf_exempt
+def get_current_position(request):
+    if "position" not in request.session:
+        request.session["position"] = {"lat": 0, "lon": 0}
+    return JsonResponse(request.session["position"])
+
+@csrf_exempt
+def update_current_position(request):
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            data = json.loads(request.body)
+            latitude = data.get('lat')
+            longitude = data.get('lon')
+            request.session["position"] = {"lat": latitude, "lon": longitude}
+            return JsonResponse({'status': 'success', 'latitude': latitude, 'longitude': longitude})
+        else:
+            return JsonResponse({'status': 'fail'}, status=403)
+    return JsonResponse({'status': 'fail'}, status=400)
