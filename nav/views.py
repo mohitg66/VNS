@@ -82,3 +82,9 @@ def update_current_position(request):
         else:
             return JsonResponse({'status': 'fail'}, status=403)
     return JsonResponse({'status': 'fail'}, status=400)
+
+def interactive_map(request):
+    if request.user.is_authenticated:
+        return render(request, 'nav/interactive_map.html')
+    else:
+        return HttpResponseRedirect(reverse('login'))

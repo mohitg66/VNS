@@ -9,4 +9,5 @@ urlpatterns = [
     path('update_user_location', views.update_user_location, name='update_user_location'),
     path('api/get_position/', views.get_current_position, name='get_position'),
     path('api/update_position/', views.update_current_position, name='update_position'),
+    path('interactive_map', views.interactive_map, name='interactive_map'),
 ]

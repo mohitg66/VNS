@@ -1,28 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-us">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    {% comment %} <link rel="stylesheet" href="static/styles.css"> {% endcomment %}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Interactive Map | IIIT-Delhi</title>
     <link rel="stylesheet" href="static/TemplateData/style.css">
     <link rel="shortcut icon" href="static/TemplateData/favicon.ico">
-    <title>Nav | IIIT-Delhi</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         body {
             background: url('https://img.freepik.com/free-vector/minimal-geometric-stripe-shape-background_1409-1014.jpg');
             background-size: cover;
         }
-        .header-content {
-            position: relative;
-            text-align: center;
+        select {
+            margin-top: 10px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007BFF;
             color: white;
-            padding-top: 6rem;
+            cursor: pointer;
+        }
+        select:hover, button:hover {
+            {% comment %} background-color: #0056b3; {% endcomment %}
         }
         .content-section {
             background: rgba(212, 207, 207, 0.6);
             margin-top: 2rem;
+            margin-bottom: 2rem;
             padding: 1rem;
             border-radius: 0.5rem;
             width: 90%;
@@ -33,10 +39,31 @@
         .footer {
             background: rgba(31, 41, 55, 0.9);
         }
+        .directions {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding: 10px 0;
+        }
+        .direction-card {
+            flex: 0 0 80%;
+            background-color: #007BFF;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            text-align: center;
+        }
+        .direction-card:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-white min-h-screen flex flex-col">
-
     <!-- Navbar -->
     <nav class="w-full bg-indigo-900 flex items-center justify-between p-4">
         <div class="text-2xl text-white font-bold">IIIT-Delhi</div>
@@ -53,60 +80,51 @@
           <li class="my-2 md:my-0"><a href="{% url 'logout' %}" class="block px-2 py-1">Logout</a></li>
         </ul>
     </nav>
-
-    <!-- Header Content -->
-    <div id="home" class="header-content">
-        <h1 class="text-4xl font-bold">Welcome to the Virtual Navigation System</h1>
-        <p class="text-xl mt-4">Navigate your way through our institute with ease.</p>
-    </div>
-
-    <!-- About Us Section -->
-    <div id="about" class="content-section">
-        <h2 class="text-2xl font-bold">About Us</h2>
-        <p>Our Virtual Navigation System (VNS) is designed to help students, faculty, and visitors find their way around the campus with ease. Using advanced GPS and WiFi positioning, our system ensures accurate and efficient navigation both indoors and outdoors.</p>
-    </div>
-
-    <!-- Contact Us Section -->
-    <div id="contact" class="content-section">
-        <h2 class="text-2xl font-bold">Contact Us</h2>
-        <p>For any queries or support, feel free to reach out to us at <a href="mailto:support@vnsystem.com" class="text-indigo-600">support@vnsystem.com</a>.</p>
-    </div>
-
-    <!-- Interactive Map Section Kink Button -->
-    <div class="content-section">
-        <h2 class="text-2xl font-bold mb-3">Interactive Map</h2>
-        <a href="{% url 'interactive_map' %}" class="bg-indigo-900 text-white p-2 rounded">Go to Interactive Map</a>
-    </div>
-
-    <!-- Interactive Map Section -->
-    <div class="content-section" id="map-section">
-        <h2 class="text-2xl font-bold">Interactive Map 2D</h2>
-        <div class="h-80" id="map"></div>
-        <button id="start" class="bg-indigo-900 text-white p-2 rounded mt-2">Start Navigation</button>
-        {% comment %} <div class="direction-icon mt-2">
-            <img src="static/images/compass.png" alt="Compass">
-        </div>         {% endcomment %}
-        <div id="coordinates" class="mt-2">Latitude: 0, Longitude: 0</div>
-    </div>
-
-      <!-- Unity Section -->
-      {% comment %} <div id="unity-container" class="content-section unity-desktop px-auto">
-        <canvas id="unity-canvas" tabindex="-1" class="w-full mb-3" ></canvas>
-        <div id="unity-loading-bar">
-          <div id="unity-logo"></div>
-          <div id="unity-progress-bar-empty">
-            <div id="unity-progress-bar-full"></div>
-          </div>
+    
+    <div id="interactive-map" class="content-section mx-auto w-full max-w-4xl p-4">
+        <h2 class="text-2xl font-bold mb-4">Interactive Map</h2>
+        <select id="location-selector" class="bg-gray-300 text-black p-2 rounded my-2" title="Select a Location">            
+            <option value="">Select a Location</option>
+            <option value="guards_room">Guards Room</option>
+            <option value="old_boys_hostel">Old Boys Hostel</option>
+            <option value="girls_hostel">Girls Hostel</option>
+            <option value="h1">H1</option>
+            <option value="h2">H2</option>
+            <option value="lecture_hall">Lecture Hall Complex</option>
+            <option value="library">Library</option>
+            <option value="academic_block">Academic Block</option>
+            <option value="rnd_block">R&D Block</option>
+            <option value="open_air_theatre">Open Air Amphitheatre</option>
+        </select>
+        
+        <!-- Unity WebGL Player -->
+        <div id="unity-container" class="unity-desktop">
+            <canvas id="unity-canvas" tabindex="-1" class="w-full mb-3" ></canvas>
+            <div id="unity-loading-bar">
+                <div id="unity-logo"></div>
+                <div id="unity-progress-bar-empty">
+                  <div id="unity-progress-bar-full"></div>
+                </div>
+            </div>
+            <div id="unity-warning"> </div>
+            <div id="unity-footer mt-2">
+              <div id="unity-webgl-logo"></div>
+              <div id="unity-fullscreen-button"></div>
+              <div id="unity-build-title">Virtual Navigation system</div>
+            </div>
         </div>
-        <div id="unity-warning"> </div>
-        <div id="unity-footer">
-          <div id="unity-webgl-logo"></div>
-          <div id="unity-fullscreen-button"></div>
-          <div id="unity-build-title">Virtual Navigation system</div>
+        
+        <!-- Navigation Controls -->
+        <div id="directions" class="directions my-4">
+            <!-- Direction cards will be added here dynamically -->
         </div>
-      </div> {% endcomment %}
+    </div>
 
-      {% comment %} <script>
+    <footer class="footer text-center mt-auto p-4">
+        <p>© 2024 IIIT-Delhi. All rights reserved.</p>
+    </footer>
+
+    <script>
         var container = document.querySelector("#unity-container");
         var canvas = document.querySelector("#unity-canvas");
         var loadingBar = document.querySelector("#unity-loading-bar");
@@ -177,18 +195,40 @@
   
         document.body.appendChild(script);
   
-      </script> {% endcomment %}
+      </script>
 
+    <script>
+        var directionsData = {
+            "old_boys_hostel": ["Move Straight towards Student Centre", "Move Left"],
+            "girls_hostel": ["Move Straight towards Student Centre", "Move Left"],
+            "h1": ["Move Straight towards Student Centre", "Move Left towards Old Boys hostel", "Move forward"],
+            "h2": ["Move Straight towards Student Centre", "Move Left towards Old Boys hostel", "Move forward"],
+            "lecture_hall": ["Move Straight towards Student Centre", "Turn Right", "Move Straight"],
+            "guards_room": ["Move Right"],
+            "academic_block": ["Move Straight towards Student Centre", "Turn Right", "Move Straight in front of LHC", "Move Left"],
+            "library": ["Move Straight towards Student Centre", "Turn Right", "Move Straight towards academic block", "Move Left"],
+            "rnd_block": ["Move Straight towards Student Centre", "Turn Right", "Move Straight towards OAT"],
+            "canteen": ["Move Straight"],
+            "open_air_theatre":["Move Straight towards Student Centre", "Turn Right", "Move Straight"]
+        };
 
-    <!-- Footer -->
-    <footer class="footer text-center mt-6 p-4">
-        <p>© 2024 Virtual Navigation System. All rights reserved.</p>
-    </footer>
+        document.getElementById('location-selector').addEventListener('change', function(event) {
+            var destination = event.target.value;
+            var directions = directionsData[destination];
+            var directionsContainer = document.getElementById('directions');
+            directionsContainer.innerHTML = ''; // Clear previous directions
 
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script type="module" src="static/map.js"></script>
-    <script type="module" src="static/sensors.js"></script>
-    <script type="module" src="static/app.js"></script>
+            if (directions) {
+                directions.forEach(function(step) {
+                    var card = document.createElement('div');
+                    card.className = 'direction-card';
+                    card.textContent = step;
+                    directionsContainer.appendChild(card);
+                });
+            }
+        });
+    </script>
+
     <script>
         const menuToggle = document.getElementById('menu-toggle');
         const menu = document.getElementById('menu');
@@ -199,5 +239,3 @@
     </script>
 </body>
 </html>
-
-{% comment %} python manage.py runserver_plus 192.168.0.162:9002 --cert-file localhost.pem --key-file localhost-key.pem {% endcomment %}
