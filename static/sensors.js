@@ -16,7 +16,7 @@ function estimatePosition() {
     const deltaLat = stepLength * Math.cos(currentDirection * Math.PI / 180) / 111320;
     const deltaLon = stepLength * Math.sin(currentDirection * Math.PI / 180) / (111320 * Math.cos(currentPosition.lat * Math.PI / 180));
     currentPosition.lat += deltaLat;
-    currentPosition.lon += deltaLon;
+    currentPosition.lon += deltaLon;c,,kok
     updateMap();
     stepCount++;
     updateStepCountDisplay();

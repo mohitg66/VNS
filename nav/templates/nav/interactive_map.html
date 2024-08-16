@@ -95,6 +95,13 @@
             <option value="academic_block">Academic Block</option>
             <option value="rnd_block">R&D Block</option>
             <option value="open_air_theatre">Open Air Amphitheatre</option>
+            <option value="digital_circuits_lab_301">Digital Circuits Lab 301</option>
+            <option value="circuits_innovation_lab_302">Circuits & Innovation Lab 302</option>
+            <option value="basic_electronics_lab_303">Basic Electronics Lab 303</option>
+            <option value="rf_applied_electromagnetics_lab_304">RF & Applied Electromagnetics Lab 304</option>
+            <option value="shannon_lab_305">Shannon Lab 305</option>
+            <option value="btech_labs_corridor">Btech Labs Corridor (3rd floor)</option>
+            <option value="rnd_sixth_floor">Rnd 6th floor</option>
         </select>
         
         <!-- Unity WebGL Player -->
@@ -118,11 +125,185 @@
         <div id="directions" class="directions my-4">
             <!-- Direction cards will be added here dynamically -->
         </div>
+        <button class="button bg-indigo-900 text-white p-2 rounded mt-2 active:bg-indigo-600" id="buttonW">↑</button>
+        <button class="button bg-indigo-900 text-white p-2 rounded mt-2 active:bg-indigo-600" id="buttonA">←</button>
+        <button class="button bg-indigo-900 text-white p-2 rounded mt-2 active:bg-indigo-600" id="buttonS">↓</button>
+        <button class="button bg-indigo-900 text-white p-2 rounded mt-2 active:bg-indigo-600" id="buttonD">→</button>
+        <button class="button bg-indigo-900 text-white p-2 rounded mt-2 active:bg-indigo-600" id="buttonQ"><</button>
+        <button class="button bg-indigo-900 text-white p-2 rounded mt-2 active:bg-indigo-600" id="buttonE">></button>
+    
     </div>
 
     <footer class="footer text-center mt-auto p-4">
         <p>© 2024 IIIT-Delhi. All rights reserved.</p>
     </footer>
+
+        </div>
+    
+        
+                </div>
+        
+        
+                        <script>
+                document.getElementById('buttonW').addEventListener('mousedown', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('W', true);
+                });
+                document.getElementById('buttonW').addEventListener('mouseup', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('W', false);
+                });
+                document.getElementById('buttonW').addEventListener('mouseleave', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('W', false);
+                });
+                document.getElementById('buttonW').addEventListener('touchstart', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('W', true);
+                });
+                document.getElementById('buttonW').addEventListener('touchend', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('W', false);
+                });
+            
+                document.getElementById('buttonA').addEventListener('mousedown', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('A', true);
+                });
+                document.getElementById('buttonA').addEventListener('mouseup', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('A', false);
+                });
+                document.getElementById('buttonA').addEventListener('mouseleave', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('A', false);
+                });
+                document.getElementById('buttonA').addEventListener('touchstart', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('A', true);
+                });
+                document.getElementById('buttonA').addEventListener('touchend', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('A', false);
+                });
+            
+                document.getElementById('buttonS').addEventListener('mousedown', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('S', true);
+                });
+                document.getElementById('buttonS').addEventListener('mouseup', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('S', false);
+                });
+                document.getElementById('buttonS').addEventListener('mouseleave', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('S', false);
+                });
+                document.getElementById('buttonS').addEventListener('touchstart', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('S', true);
+                });
+                document.getElementById('buttonS').addEventListener('touchend', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('S', false);
+                });
+            
+                document.getElementById('buttonD').addEventListener('mousedown', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('D', true);
+                });
+                document.getElementById('buttonD').addEventListener('mouseup', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('D', false);
+                });
+                document.getElementById('buttonD').addEventListener('mouseleave', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('D', false);
+                });
+                document.getElementById('buttonD').addEventListener('touchstart', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('D', true);
+                });
+                document.getElementById('buttonD').addEventListener('touchend', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('D', false);
+                });
+            
+                document.getElementById('buttonQ').addEventListener('mousedown', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('Q', true);
+                });
+                document.getElementById('buttonQ').addEventListener('mouseup', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('Q', false);
+                });
+                document.getElementById('buttonQ').addEventListener('mouseleave', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('Q', false);
+                });
+                document.getElementById('buttonQ').addEventListener('touchstart', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('Q', true);
+                });
+                document.getElementById('buttonQ').addEventListener('touchend', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('Q', false);
+                });
+            
+                document.getElementById('buttonE').addEventListener('mousedown', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('E', true);
+                });
+                document.getElementById('buttonE').addEventListener('mouseup', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('E', false);
+                });
+                document.getElementById('buttonE').addEventListener('mouseleave', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('E', false);
+                });
+                document.getElementById('buttonE').addEventListener('touchstart', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('E', true);
+                });
+                document.getElementById('buttonE').addEventListener('touchend', function(event) {
+                    event.preventDefault();
+                    handleKeyPress('E', false);
+                });
+            
+                function handleKeyPress(key, isPressing) {
+                    if (isPressing) {
+                        this.pressTimer = setTimeout(function() {
+                            simulateKeyPress(key, true);
+                        }, 500); // 500ms for long press
+                    } else {
+                        clearTimeout(this.pressTimer);
+                        simulateKeyPress(key, false);
+                    }
+                }
+            
+                function simulateKeyPress(key, isLongPress) {
+                    var keydownEvent = new KeyboardEvent('keydown', {
+                        key: key,
+                        code: 'Key' + key.toUpperCase(),
+                        keyCode: key.charCodeAt(0),
+                        which: key.charCodeAt(0),
+                        bubbles: true
+                    });
+                    document.dispatchEvent(keydownEvent);
+            
+                    if (!isLongPress) {
+                        var keyupEvent = new KeyboardEvent('keyup', {
+                            key: key,
+                            code: 'Key' + key.toUpperCase(),
+                            keyCode: key.charCodeAt(0),
+                            which: key.charCodeAt(0),
+                            bubbles: true
+                        });
+                        document.dispatchEvent(keyupEvent);
+                    }
+                }
+            </script>
 
     <script>
         var container = document.querySelector("#unity-container");
@@ -209,7 +390,14 @@
             "library": ["Move Straight towards Student Centre", "Turn Right", "Move Straight towards academic block", "Move Left"],
             "rnd_block": ["Move Straight towards Student Centre", "Turn Right", "Move Straight towards OAT"],
             "canteen": ["Move Straight"],
-            "open_air_theatre":["Move Straight towards Student Centre", "Turn Right", "Move Straight"]
+            "open_air_theatre":["Move Straight towards Student Centre", "Turn Right", "Move Straight"],
+            "digital_circuits_lab_301": ["Reach LHC Block", "Move Straight towards Student Centre", "Turn Right", "Move Straight", "Enter LHC", "Head to the third floor via lift or stairs", "Turn left on 3rd floor"],
+            "circuits_innovation_lab_302": ["Reach LHC Block", "Move Straight towards Student Centre", "Turn Right", "Move Straight", "Enter LHC", "Head to the third floor via lift or stairs", "Turn left on 3rd floor"],
+            "basic_electronics_lab_303": ["Reach LHC Block", "Move Straight towards Student Centre", "Turn Right", "Move Straight", "Enter LHC", "Head to the third floor via lift or stairs", "Turn left on 3rd floor"],
+            "rf_applied_electromagnetics_lab_304": ["Reach LHC Block", "Move Straight towards Student Centre", "Turn Right", "Move Straight", "Enter LHC", "Head to the third floor via lift or stairs", "Turn left on 3rd floor"],
+            "shannon_lab_305": ["Reach LHC Block", "Move Straight towards Student Centre", "Turn Right", "Move Straight", "Enter LHC", "Head to the third floor via lift or stairs", "Turn left on 3rd floor"],
+            "btech_labs_corridor": ["Reach LHC Block", "Move Straight towards Student Centre", "Turn Right", "Move Straight", "Enter LHC", "Head to the third floor via lift or stairs", "You have arrived"],
+            "rnd_sixth_floor": ["Move Straight towards Student Centre", "Turn Right", "Move Straight towards OAT","Enter Rnd Block","Take the lift to 6th floor"]
         };
 
         document.getElementById('location-selector').addEventListener('change', function(event) {
